@@ -40,6 +40,9 @@ Try some images:
 
 ### Edit
 
+The `shell` service mounts . into `/app/user` - from here, you can
+have a normal local-style workflow, but operating within a cedar-14 container.
+
 ```
 $ docker-compose run --service-ports shell
 $
