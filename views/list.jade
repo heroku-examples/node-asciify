@@ -1,0 +1,13 @@
+extends ./_layout.jade
+  
+block content
+  section#new
+    header ASCIIfy an image
+    form(method='post', action='/image')
+      input(name='url', placeholder='http://url.com/image.png')
+      button(type='submit') Add
+  section#list
+    header Recently ASCIIfied images
+    each art in list
+      li
+        a(href='/art/' + art.uuid) #{ art.url }

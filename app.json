@@ -1,0 +1,6 @@
+{
+  "name": "ASCII Art Creator",
+  "description": "A non-trivial test for heroku-docker with compose",
+  "image": "hunterloftis/node",
+  "addons": [ "heroku-redis", "heroku-postgresql" ]
+}

@@ -1,0 +1,12 @@
+var logfmt = require('logfmt');
+var app = require('../worker')({
+  redis: process.env.REDIS_URL,
+  postgres: process.env.DATABASE_URL
+});
+
+process.once('SIGTERM', exit);
+process.once('SIGINT', exit);
+
+function exit() {
+  process.exit();
+}

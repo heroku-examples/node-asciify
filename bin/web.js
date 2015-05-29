@@ -1,0 +1,35 @@
+var logger = require('logfmt');
+var app = require('../web')({
+  redis: process.env.REDIS_URL,
+  postgres: process.env.DATABASE_URL
+});
+
+process.once('SIGTERM', shutdown);
+process.once('SIGINT', shutdown);
+
+app.once('ready', function() {
+  logger.log({ event: 'ready' });
+  process.once('SIGTERM', close);
+  process.once('SIGINT', close);
+
+  var PORT = process.env.PORT || 3000;
+  var server = app.listen(PORT, onListen);
+
+  function onListen(err) {
+    if (err) throw err;
+    logger.log({ event: 'listening', port: PORT });
+  }
+
+  function close() {
+    logger.log({ event: 'closing' });
+    server.close(exit);
+  }
+});
+
+function shutdown() {
+  setTimeout(exit, 3000).unref();
+}
+
+function exit() {
+  process.exit();
+}

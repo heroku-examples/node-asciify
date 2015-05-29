@@ -1,0 +1,23 @@
+extends ./_layout.jade
+
+block title
+  title ASCIIfied
+  
+block content
+  section
+    header ASCIIfied
+    pre#ascii #{art.ascii}
+  
+  script(src='/public/jquery.min.js')
+  script.
+    poll();
+    
+    function poll() {
+      var ascii = document.getElementById('ascii');
+      if (ascii.innerHTML.length) return;
+      $.getJSON(window.location.href + '.json', function(data) {
+        if (data.ascii) ascii.innerHTML = data.ascii;
+        setTimeout(poll, 1000);
+      });
+    }
+    
