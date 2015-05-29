@@ -1,6 +1,7 @@
 # ASCIIfy
 
-This project demonstrates a non-trivial app with heroku-docker and docker-compose.
+This project demonstrates a non-trivial app with
+[heroku-docker and docker-compose](https://github.com/heroku/heroku-docker/tree/compose).
 
 It requires the following services:
 
@@ -15,15 +16,6 @@ All of this complexity is handled within the heroku-docker plugin's
 
 It also requires an extension to the node Dockerfile (for graphicsmagick).
 This is accomplished by editing the generated `Dockerfile`.
-
-### Install the compose branch
-
-```
-$ git clone https://github.com/heroku/heroku-docker.git
-$ cd heroku-docker
-$ npm install
-$ heroku plugins:link
-```
 
 ### Clone this project
 
