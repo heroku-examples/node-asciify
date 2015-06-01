@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var logger = require('logfmt');
 var app = require('../web')({
   redis: process.env.REDIS_URL,

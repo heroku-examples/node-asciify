@@ -23,11 +23,11 @@ shell:
   build: .
   command: bash
   environment:
-    PORT: '3001'
+    PORT: '3000'
     REDIS_URL: 'redis://herokuRedis:6379'
     DATABASE_URL: 'postgres://postgres:@herokuPostgresql:5432/postgres'
   ports:
-    - '3001:3001'
+    - '3000:3000'
   links:
     - herokuRedis
     - herokuPostgresql
