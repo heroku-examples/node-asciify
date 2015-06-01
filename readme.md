@@ -28,6 +28,12 @@ $ cd asciify
 
 ```
 $ docker-compose up web worker
+```
+
+Then, in a different terminal, open your docker host.
+With boot2docker, this looks like:
+
+```
 $ open "http://$(boot2docker ip):3000"
 ```
 
