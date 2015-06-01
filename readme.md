@@ -3,6 +3,8 @@
 This project demonstrates a non-trivial app with
 [the compose branch of heroku-docker](https://github.com/heroku/heroku-docker/tree/compose).
 
+![app image](https://cloud.githubusercontent.com/assets/364501/7924870/f8c89abe-088c-11e5-8b37-051950c563ad.png)
+
 ## Requirements
 
 To run this project, you'll need to
