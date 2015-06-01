@@ -54,11 +54,13 @@ module.exports = function(options) {
 
   // Render ASCII art
   function showArt(req, res) {
+    logger.log({ event: 'showing ascii' });
     res.render('art');
   }
 
   // Send ASCII art as data
   function sendArt(req, res) {
+    logger.log({ event: 'showing json' });
     return res.send(res.locals.art);
   }
 
@@ -72,6 +74,7 @@ module.exports = function(options) {
 
   // Render a list of art
   function listArt(req, res) {
+    logger.log({ event: 'listing images' });
     res.render('list');
   }
 

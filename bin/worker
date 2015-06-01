@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-var logfmt = require('logfmt');
 var app = require('../worker')({
   redis: process.env.REDIS_URL,
   postgres: process.env.DATABASE_URL
