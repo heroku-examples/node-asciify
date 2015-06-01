@@ -60,9 +60,6 @@ Try some images:
 
 ### Hack
 
-The `shell` service mounts . into `/app/user` - from here, you can
-have a normal local-style workflow:
-
 ```
 $ docker-compose run --service-ports shell
 ```
