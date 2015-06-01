@@ -5,6 +5,7 @@ var hreq = require('httpreq');
 var path = require('path');
 var uuid = require('node-uuid');
 var massive = require('massive');
+var gm = require('gm');
 
 module.exports = function(options) {
   var queue = kue.createQueue({ redis: options.redis });
@@ -32,18 +33,29 @@ module.exports = function(options) {
     queue.process('art', onJob);
 
     function onJob(job, done) {
-      var filename = '/tmp/' + uuid.v1() + path.extname(job.data.url);
+      var file1 = '/tmp/' + uuid.v1() + path.extname(job.data.url);
+      var file2 = '/tmp/' + uuid.v1() + path.extname(job.data.url);
       logger.log({ event: 'processing job', url: job.data.url });
 
-      hreq.download(job.data.url, filename, function() {}, convert);
+      hreq.download(job.data.url, file1, function() {}, tweak);
+
+      function tweak(err) {
+        if (err) throw err;
+        gm(file1)
+          .contrast(1)
+          .resize(null, 2000)
+          .write(file2, convert);
+      }
 
       function convert(err) {
         if (err) throw err;
         logger.log({ event: 'converting image to ascii' });
         ascii({
-          path: filename,
+          path: file2,
           colored: false,
-          size: { height: '200%' }
+          pxWidth: 2,
+          pixels: '     ..,:;i1tfL@',
+          size: { height: '240%' }
         }, save);
       }
 
