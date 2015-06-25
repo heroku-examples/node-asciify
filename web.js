@@ -5,11 +5,12 @@ var massive = require('massive');
 var uuid = require('node-uuid');
 var logger = require('logfmt');
 var path = require('path');
+var parseRedisUrl = require('parse-redis-url')().parse;
 
 module.exports = function(options) {
   var app = express();
 
-  app.set('queue', kue.createQueue({ redis: options.redis }));
+  app.set('queue', kue.createQueue({ redis: parseRedisUrl(options.redis) }));
   massive.connect({ connectionString: options.postgres }, onDB);
 
   return app

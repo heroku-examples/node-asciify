@@ -6,9 +6,10 @@ var path = require('path');
 var uuid = require('node-uuid');
 var massive = require('massive');
 var gm = require('gm');
+var parseRedisUrl = require('parse-redis-url')().parse;
 
 module.exports = function(options) {
-  var queue = kue.createQueue({ redis: options.redis });
+  var queue = kue.createQueue({ redis: parseRedisUrl(options.redis) });
   massive.connect({ connectionString: options.postgres }, onDB);
 
   // Initialize the db
