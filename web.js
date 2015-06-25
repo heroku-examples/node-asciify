@@ -9,9 +9,13 @@ var parseRedisUrl = require('parse-redis-url')().parse;
 
 module.exports = function(options) {
   var app = express();
-
-  app.set('queue', kue.createQueue({ redis: parseRedisUrl(options.redis) }));
-  massive.connect({ connectionString: options.postgres }, onDB);
+  var redisConfig = parseRedisUrl(options.redis);
+  redisConfig.auth = redisConfig.pass;
+  console.log(redisConfig);
+  app.set('queue', kue.createQueue({ redis: redisConfig }));
+  massive.connect({
+    connectionString: options.postgres,
+    scripts: path.join(__dirname, 'db') }, onDB);
 
   return app
     .set('view engine', 'jade')
@@ -29,6 +33,7 @@ module.exports = function(options) {
   // Initialize the db
   function onDB(err, db) {
     if (err) throw err;
+    console.log('db:', db);
     db.schema(onSchema);
 
     // Load any tables we've created from the schema

@@ -9,8 +9,12 @@ var gm = require('gm');
 var parseRedisUrl = require('parse-redis-url')().parse;
 
 module.exports = function(options) {
-  var queue = kue.createQueue({ redis: parseRedisUrl(options.redis) });
-  massive.connect({ connectionString: options.postgres }, onDB);
+  var redisConfig = parseRedisUrl(options.redis);
+  redisConfig.auth = redisConfig.pass;
+  var queue = kue.createQueue({ redis: redisConfig });
+  massive.connect({
+    connectionString: options.postgres,
+    scripts: path.join(__dirname, 'db')  }, onDB);
 
   // Initialize the db
   function onDB(err, db) {
