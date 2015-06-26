@@ -11,7 +11,6 @@ module.exports = function(options) {
   var app = express();
   var redisConfig = parseRedisUrl(options.redis);
   redisConfig.auth = redisConfig.pass;
-  console.log(redisConfig);
   app.set('queue', kue.createQueue({ redis: redisConfig }));
   massive.connect({
     connectionString: options.postgres,
@@ -21,7 +20,7 @@ module.exports = function(options) {
     .set('view engine', 'jade')
     .set('view cache', false)
     .set('views', path.join(__dirname, 'views'))
-    .use('/public', express.static('public'))
+    .use('/public', express.static(path.join(__dirname, 'public')))
     .use(bodyParser.urlencoded({ extended: false }))
     .use(bodyParser.json())
     .get('/', getArtList, listArt)
@@ -33,7 +32,6 @@ module.exports = function(options) {
   // Initialize the db
   function onDB(err, db) {
     if (err) throw err;
-    console.log('db:', db);
     db.schema(onSchema);
 
     // Load any tables we've created from the schema
