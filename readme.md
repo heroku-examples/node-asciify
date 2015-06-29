@@ -51,7 +51,7 @@ You can open your docker host in a browser to interact with the server.
 With boot2docker, this looks like:
 
 ```
-$ open "http://$(boot2docker ip):3000"
+$ open "http://$(boot2docker ip):8080"
 ```
 
 *docker-compose sometimes requires an (enter) to show the first line of stdout*
