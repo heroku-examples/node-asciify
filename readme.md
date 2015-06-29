@@ -40,6 +40,9 @@ $ heroku open
 
 ### Local development
 
+First, [install the compose branch](https://github.com/heroku/heroku-docker/tree/compose#installation)
+of heroku-docker. Then:
+
 ```
 $ docker-compose run --service-ports shell
 root@368fd5150ded:/app/user# npm install
