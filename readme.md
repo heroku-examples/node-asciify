@@ -34,8 +34,6 @@ of heroku-docker. Then:
 
 ```
 $ heroku create
-$ heroku addons:create heroku-postgresql
-$ heroku addons:create heroku-redis
 $ heroku docker:release
 $ heroku scale worker=1
 $ heroku open
