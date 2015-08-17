@@ -1,6 +1,6 @@
 web:
   build: .
-  command: 'bash -c "bin/web"'
+  command: 'bash -c ''bin/web'''
   working_dir: /app/user
   environment:
     PORT: 8080
@@ -13,7 +13,7 @@ web:
     - herokuPostgresql
 worker:
   build: .
-  command: 'bash -c "bin/worker"'
+  command: 'bash -c ''bin/worker'''
   working_dir: /app/user
   environment:
     REDIS_URL: 'redis://herokuRedis:6379'
