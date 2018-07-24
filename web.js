@@ -13,8 +13,7 @@ module.exports = function (options) {
   redisConfig.auth = redisConfig.pass;
   app.set('queue', kue.createQueue({ redis: redisConfig }));
   massive.connect({
-    ssl: true,
-    connectionString: options.postgres,
+    connectionString: options.postgres + '?ssl=true',
     scripts: path.join(__dirname, 'db')
   }, onDB);
 
