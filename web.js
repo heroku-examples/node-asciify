@@ -7,14 +7,16 @@ var logger = require('logfmt');
 var path = require('path');
 var parseRedisUrl = require('parse-redis-url')().parse;
 
-module.exports = function(options) {
+module.exports = function (options) {
   var app = express();
   var redisConfig = parseRedisUrl(options.redis);
   redisConfig.auth = redisConfig.pass;
   app.set('queue', kue.createQueue({ redis: redisConfig }));
   massive.connect({
+    ssl: true,
     connectionString: options.postgres,
-    scripts: path.join(__dirname, 'db') }, onDB);
+    scripts: path.join(__dirname, 'db')
+  }, onDB);
 
   return app
     .set('view engine', 'jade')
@@ -50,7 +52,7 @@ module.exports = function(options) {
   // Look up processed art in the db and pass it on
   function getArt(req, res, next) {
     logger.log({ event: 'loading art from db', uuid: req.params.uuid });
-    app.get('db').art.findOne({ uuid: req.params.uuid }, function(err, art) {
+    app.get('db').art.findOne({ uuid: req.params.uuid }, function (err, art) {
       res.locals.art = art;
       next(err);
     });
@@ -70,7 +72,7 @@ module.exports = function(options) {
 
   // Look up recently processed art in the db and pass it on
   function getArtList(req, res, next) {
-    app.get('db').art.find({}, { limit: 10, order: 'created_at desc' }, function(err, list) {
+    app.get('db').art.find({}, { limit: 10, order: 'created_at desc' }, function (err, list) {
       res.locals.list = list;
       next(err);
     });

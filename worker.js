@@ -8,13 +8,15 @@ var massive = require('massive');
 var gm = require('gm');
 var parseRedisUrl = require('parse-redis-url')().parse;
 
-module.exports = function(options) {
+module.exports = function (options) {
   var redisConfig = parseRedisUrl(options.redis);
   redisConfig.auth = redisConfig.pass;
   var queue = kue.createQueue({ redis: redisConfig });
   massive.connect({
+    ssl: true,
     connectionString: options.postgres,
-    scripts: path.join(__dirname, 'db')  }, onDB);
+    scripts: path.join(__dirname, 'db')
+  }, onDB);
 
   // Initialize the db
   function onDB(err, db) {
@@ -42,7 +44,7 @@ module.exports = function(options) {
       var file2 = '/tmp/' + uuid.v1() + path.extname(job.data.url);
       logger.log({ event: 'processing job', url: job.data.url });
 
-      hreq.download(job.data.url, file1, function() {}, tweak);
+      hreq.download(job.data.url, file1, function () { }, tweak);
 
       function tweak(err) {
         if (err) throw err;
