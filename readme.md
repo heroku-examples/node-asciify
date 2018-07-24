@@ -81,7 +81,8 @@ This app will never process images because the worker crashes when trying to loc
 ## Compared to a Dockerfile deploy
 
 In order to deploy this with a Dockerfile,
-you'll need to first write (or find) an appropriate Dockerfile.
+you'll need to first write an appropriate Dockerfile.
+
 Then you'll need to use Docker locally to build the image,
 then tag the image,
 then push the image to Heroku's container registry.
