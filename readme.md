@@ -20,6 +20,7 @@ $ heroku _container:run --config
 ```
 
 Now open [http://localhost:5000](http://localhost:5000).
+
 Then, in a new terminal:
 
 ```
@@ -29,6 +30,7 @@ $ heroku _container:run --type worker --config
 
 Now, you have two local dynos running: `web` and `worker`.
 Your [local server](http://localhost:5000) should be able to turn images into ASCII art.
+
 Test some images:
 
 - http://static.comicvine.com/uploads/original/14/147508/4716538-the_avengers___ironman_by_stephencanlas-d4zpaxl.jpg
