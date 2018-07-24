@@ -5,8 +5,8 @@ This project demonstrates a non-trivial app with
 
 ## Quick Start
 
-- [install docker](https://docs.docker.com/installation/)
-- check that docker is available (`docker ps`)
+- Install [Docker](https://www.docker.com/)
+- Check that docker is available in your terminal (`docker ps`)
 
 ```
 $ heroku plugins:install container-build
