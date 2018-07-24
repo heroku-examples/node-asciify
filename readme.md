@@ -14,7 +14,7 @@ $ git clone https://github.com/heroku-examples/node-asciify.git
 $ cd node-asciify
 $ heroku create
 $ heroku addons:create heroku-redis
-$ heroku addons:create heroku-postgres
+$ heroku addons:create heroku-postgresql
 $ heroku _container:build
 $ heroku _container:run --config
 ```
@@ -69,7 +69,7 @@ Try this with a new Heroku app:
 ```
 $ git remote rm heroku
 $ heroku create
-$ heroku addons:create heroku-postgres
+$ heroku addons:create heroku-postgresql
 $ heroku addons:create heroku-redis
 $ git push heroku master
 $ heroku scale worker=1
