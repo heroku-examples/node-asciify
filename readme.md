@@ -1,69 +1,50 @@
 # ASCIIfy
 
 This project demonstrates a non-trivial app with
-[heroku-docker](https://github.com/heroku/heroku-docker).
+[container-build](https://devcenter.heroku.com/articles/build-and-run-heroku-apps-locally-with-docker?preview=1).
 
 ## Quick Start
 
 - [install docker](https://docs.docker.com/installation/)
-- [install docker-compose](https://docs.docker.com/compose/install/)
 - check that docker is available (`docker ps`)
-- check that docker-compose is available (`docker-compose -v`)
 
 ```
+$ heroku plugins:install container-build
 $ git clone https://github.com/heroku-examples/node-asciify.git
 $ cd node-asciify
-$ docker-compose up web worker
+$ heroku create
+$ heroku addons:create heroku-redis
+$ heroku addons:create heroku-postgres
+$ heroku _container:build
+$ heroku _container:run --config
 ```
 
-Then, in a different terminal, open your docker host.
-With boot2docker, this looks like:
+Now open [http://localhost:5000](http://localhost:5000).
+Then, in a new terminal:
 
 ```
-$ open "http://$(boot2docker ip):8080"
+$ cd node-asciify
+$ heroku _container:run --type worker --config
 ```
 
-Try some images:
+Now, you have two local dynos running: `web` and `worker`.
+Your [local server](http://localhost:5000) should be able to turn images into ASCII art.
+Test some images:
 
 - http://static.comicvine.com/uploads/original/14/147508/4716538-the_avengers___ironman_by_stephencanlas-d4zpaxl.jpg
 - http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/30/1367315381079/1990-TEENAGE-MUTANT-NINJA-011.jpg
 - http://fc08.deviantart.net/fs70/f/2011/072/0/f/shadow_across_her_face_by_hattori_hanzo_2010-d3bjg74.jpg
 
-### Deploying
+## Deploy
 
-First, install the heroku-docker plugin:
-
-```
-$ heroku plugins:install heroku-docker
-```
-
-Then, create and release the app:
+Once you're done working locally, deploy to Heroku:
 
 ```
-$ heroku create
-$ heroku docker:release
-$ heroku scale web=1 worker=1
+$ heroku _container:build
+$ heroku _container:push
+$ heroku scale worker=1
 $ heroku open
 ```
-
-### Local development
-
-```
-$ docker-compose run --service-ports shell
-root@368fd5150ded:/app/user# npm install
-root@368fd5150ded:/app/user# bin/worker &
-root@368fd5150ded:/app/user# nodemon bin/web
-```
-
-You can open your docker host in a browser to interact with the server.
-With boot2docker, this looks like:
-
-```
-$ open "http://$(boot2docker ip):8080"
-```
-
-The volume is mounted, so you can open the project outside of docker in your usual editor,
-make changes, and those changes will be reflected within the Cedar-14 container.
 
 ## All the Moving Parts
 
@@ -77,4 +58,30 @@ illustrate how Heroku-Docker helps manage complexity:
 - graphicsmagick (custom binary)
 
 ASCIIfy also needs graphicsmagick, which isn't built into Heroku's Cedar-14 stack.
-We extend the stack to support the app by adding gm to the generated `Dockerfile`.
+We extend the stack to support the app by adding the dependency to `heroku.yml`.
+
+## Compared to a standard deploy
+
+Try this with a new Heroku app:
+
+```
+$ git remote rm heroku
+$ heroku create
+$ heroku addons:create heroku-postgres
+$ heroku addons:create heroku-redis
+$ git push heroku master
+$ heroku scale worker=1
+$ heroku open
+```
+
+This app will never process images because the worker crashes when trying to locate graphicsmagick.
+
+## Compared to a Dockerfile deploy
+
+In order to deploy this with a Dockerfile,
+you'll need to first write (or find) an appropriate Dockerfile.
+Then you'll need to use Docker locally to build the image,
+then tag the image,
+then push the image to Heroku's container registry.
+
+Good luck!
