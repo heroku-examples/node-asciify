@@ -86,4 +86,7 @@ Then you'll need to use Docker locally to build the image,
 then tag the image,
 then push the image to Heroku's container registry.
 
+From then on, you'll have to maintain the runtime,
+npm version, security, etc based on the Dockerfile you've written.
+
 Good luck!
