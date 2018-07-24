@@ -1,7 +1,3 @@
 build:
-  pre:
-    - apt-get update
-    - apt-get -y install graphicsmagick
-run:
-  web: bin/web
-  worker: bin/worker
+  packages:
+    - graphicsmagick
